@@ -85,6 +85,9 @@ function parsePut(  )
                 //get tmp name
                 $filename_parts = pathinfo( $filename );
                 $tmp_name = tempnam( ini_get('upload_tmp_dir'), $filename_parts['filename']);
+		
+		//fix issue on Ubuntu that adds new line ( 0A byte) and end of nupkg file
+		$body = rtrim($body, '\x0A');
 
                 //populate $_FILES with information, size may be off in multibyte situation
                 $_FILES[ $matches[ 2 ] ] = array(
